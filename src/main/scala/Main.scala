@@ -89,14 +89,6 @@ object Main extends App with akka.http.scaladsl.marshallers.sprayjson.SprayJsonS
           val skip = skipOp.getOrElse(0)
           val take = takeOp.getOrElse(50) // (Int.MaxValue)
 
-          /*
-          val source: Source[Rank, NotUsed] = Source.fromIterator(() =>
-            ranks.take(skip + take).drop(skip).map {
-              case (vid, (rank, name)) => Rank(rank, vid, name)
-            }.toIterator
-          )
-          */
-
           val future = fRanks.map(_.take(skip + take).drop(skip).map {
             case (vid, (rank, name)) => Rank(rank, vid, name)
           })
